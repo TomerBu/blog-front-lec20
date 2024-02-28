@@ -1,6 +1,5 @@
 import "./App.css";
 import Header from "./Header";
- 
 
 //react component: function that returns JSX
 function App() {
@@ -8,8 +7,7 @@ function App() {
   return (
     <>
       <main>
-         <Header/>
-
+        <Header />
       </main>
     </>
   );

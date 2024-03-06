@@ -1,12 +1,12 @@
 .toggle-button {
   transition: transform 0.3s ease-in-out;
 
-  //   same as icon-container.dark
+  //same as toggle-button.dark
   &.dark {
     transform: rotate(180deg);
   }
 
-  //   same as icon-container.light
+  //same as toggle-button.light
   &.light {
     transform: rotate(0deg);
   }

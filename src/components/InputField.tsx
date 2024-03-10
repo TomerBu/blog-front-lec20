@@ -1,4 +1,4 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister, ValidationRule } from "react-hook-form";
 import { RegisterRequest } from "../routes/Register";
 import React from "react";
 
@@ -6,17 +6,20 @@ type InputFieldProps = {
   register: UseFormRegister<RegisterRequest>;
   errors: FieldErrors<RegisterRequest>;
   name: keyof RegisterRequest; //"username"/"password"/"email"
+  pattern?: ValidationRule<RegExp> | undefined;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputField = ({
   errors,
   register,
   name,
+  pattern,
   ...rest
 }: InputFieldProps) => {
   return (
     <div>
       <input
+        placeholder={`${name}`}
         {...rest}
         {...register(`${name}`, {
           required: `${name} is required`,
@@ -40,8 +43,3 @@ const InputField = ({
 };
 
 export default InputField;
-
-
-function demo(){
-  
-}

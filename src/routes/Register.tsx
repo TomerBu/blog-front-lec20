@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import InputField from "../components/InputField";
 
 export type RegisterRequest = {
   username: string;
@@ -14,7 +15,7 @@ const Register = () => {
     control,
     formState: { errors },
   } = useForm<RegisterRequest>({
-    mode:"onChange"
+    mode: "onChange",
   });
 
   const onSubmit = (data: RegisterRequest) => {
@@ -23,38 +24,19 @@ const Register = () => {
 
   return (
     <>
-      <h1 className="text-center text-lg my-2" >Sign up</h1>
+      <h1 className="text-center text-lg my-2">Sign up</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         className="flex flex-col gap-5 w-1/1 mx-4 md:w-1/2 md:mx-auto shadow-2xl rounded-xl p-5 text-xl"
       >
-        <input
-          placeholder="username"
-          {...register("username", {
-            required: "username is required",
-            minLength: { value: 2, message: "Min length is 2" },
-            maxLength: { value: 20, message: "Max length is 20" },
-          })}
-          type="text"
-          autoComplete="username"
+        <InputField
+          register={register}
+          errors={errors}
+          name="username"
         />
-        {errors.username && (
-          <p className="text-red-500">{errors.username.message}</p>
-        )}
-        <input
-          {...register("email", {
-            required: "email is required",
-            pattern: {
-              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: "Email must be valid",
-            },
-          })}
-          type="email"
-          autoComplete="email"
-          placeholder="Email"
-        />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+        <InputField register={register} errors={errors} name="email" />
+
         <input
           {...register("password", {
             required: "password is required",
@@ -80,7 +62,11 @@ const Register = () => {
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
-        <input className="rounded-md bg-blue-500 text-white p-2" type="submit" value="Register" />
+        <input
+          className="rounded-md bg-blue-500 text-white p-2"
+          type="submit"
+          value="Register"
+        />
       </form>
 
       <DevTool control={control} />

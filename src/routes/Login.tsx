@@ -26,6 +26,7 @@ const Login = () => {
     try {
       Auth.login(data);
       await Dialogs.success("Logged in");
+      //SAVE JWT for further requests - stay logged in
       nav("/");
     } catch (e) {
       Dialogs.error(e);

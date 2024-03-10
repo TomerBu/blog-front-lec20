@@ -23,11 +23,11 @@ const Register = () => {
 
   return (
     <>
-      <h1>Sign up</h1>
+      <h1 className="text-center text-lg my-2" >Sign up</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex flex-col gap-5 w-1/2 mx-auto shadow-2xl rounded-xl p-5 text-xl"
+        className="flex flex-col gap-5 w-1/1 mx-4 md:w-1/2 md:mx-auto shadow-2xl rounded-xl p-5 text-xl"
       >
         <input
           placeholder="username"

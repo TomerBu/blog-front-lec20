@@ -1,44 +1,49 @@
-import { FieldErrors, UseFormRegister, ValidationRule } from "react-hook-form";
-import { RegisterRequest } from "../routes/Register";
-import React from "react";
-import { LoginRequest } from "../routes/Login";
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+  ValidationRule,
+} from "react-hook-form";
 
-type InputFieldProps = {
-  register: UseFormRegister<RegisterRequest| LoginRequest>;
-  errors: FieldErrors<RegisterRequest|LoginRequest>;
-  name: keyof RegisterRequest | keyof LoginRequest; //"username"/"password"/"email"
+type InputFieldProps<T extends FieldValues> = {
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
+  name: Path<T>; //"username"/"password"/"email"
   pattern?: ValidationRule<RegExp> | undefined;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & Omit<Omit<React.InputHTMLAttributes<HTMLInputElement>, "name">, "pattern">;
 
-const InputField = ({
+const InputField = <T extends FieldValues>({
   errors,
   register,
   name,
   pattern,
   ...rest
-}: InputFieldProps) => {
+}: InputFieldProps<T>) => {
+  const err = (errors[name]?.message ?? "") as string;
+  const MAX = Number.MAX_SAFE_INTEGER;
   return (
-    <div>
+    <div className="p-2">
       <input
+        className="rounded-md p-2 w-full border-2 border-blue-300"
         placeholder={`${name}`}
         {...rest}
-        {...register(`${name}`, {
+        {...register(name, {
           required: `${name} is required`,
           minLength: {
             value: rest.minLength ?? 2,
             message: `Min length is ${rest.minLength ?? 2}`,
           },
           maxLength: {
-            value: rest.maxLength ?? 2000000,
-            message: `Max length is ${rest.maxLength ?? 2000000}`,
+            value: rest.maxLength ?? MAX,
+            message: `Max length is ${rest.maxLength ?? MAX}`,
           },
+          pattern: pattern,
         })}
         type="text"
         autoComplete="username"
       />
-      {errors.username && (
-        <p className="text-red-500">{errors.username.message}</p>
-      )}
+      {errors[name] && <p className="text-red-500">{err}</p>}
     </div>
   );
 };

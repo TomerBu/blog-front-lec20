@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import InputField from "../components/InputField";
+import { Auth } from "../services/auth-service";
 
 export type RegisterRequest = {
   username: string;
@@ -19,7 +20,9 @@ const Register = () => {
   });
 
   const onSubmit = (data: RegisterRequest) => {
-    alert("submitted : " + JSON.stringify(data)); //object object
+    try {
+      Auth.register(data);
+    } catch (e) {}
   };
 
   return (
@@ -30,11 +33,7 @@ const Register = () => {
         noValidate
         className="flex flex-col gap-5 w-1/1 mx-4 md:w-1/2 md:mx-auto shadow-2xl rounded-xl p-5 text-xl"
       >
-        <InputField
-          register={register}
-          errors={errors}
-          name="username"
-        />
+        <InputField register={register} errors={errors} name="username" />
         <InputField register={register} errors={errors} name="email" />
 
         <input

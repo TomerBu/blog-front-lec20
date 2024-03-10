@@ -80,7 +80,7 @@ const Register = () => {
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
-        <input type="submit" value="Register" />
+        <input className="rounded-md bg-blue-500 text-white p-2" type="submit" value="Register" />
       </form>
 
       <DevTool control={control} />

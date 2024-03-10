@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import InputField from "../components/InputField";
 import { Auth } from "../services/auth-service";
+import { Dialogs } from "../ui/dialogs";
+import { useNavigate } from "react-router-dom";
 
 export type RegisterRequest = {
   username: string;
@@ -10,6 +12,7 @@ export type RegisterRequest = {
 };
 
 const Register = () => {
+  const nav = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,10 +22,15 @@ const Register = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: RegisterRequest) => {
+  const onSubmit = async (data: RegisterRequest) => {
     try {
-      Auth.register(data);
-    } catch (e) {}
+      await Auth.register(data);
+      await Dialogs.success("Go Login!");
+      //go login
+      nav("/login");
+    } catch (e) {
+      Dialogs.error(e);
+    }
   };
 
   return (

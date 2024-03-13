@@ -9,7 +9,7 @@ import {
 type InputFieldProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
-  name: Path<T>; //"username"/"password"/"email"
+  name: Path<T>; 
   pattern?: ValidationRule<RegExp> | undefined;
 } & Omit<Omit<React.InputHTMLAttributes<HTMLInputElement>, "name">, "pattern">;
 

@@ -7,6 +7,7 @@ import { RouteObject } from "react-router-dom";
 import Post from "./Post";
 import PostIdError from "./error/PostIdError";
 import ErrorPage from "./error/ErrorPage";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export const routes: RouteObject[] = [
   {
@@ -16,16 +17,28 @@ export const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Posts />,
+        element: (
+          <ProtectedRoute>
+            <Posts />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/posts",
-        element: <Posts />,
+        element: (
+          <ProtectedRoute>
+            <Posts />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/posts/:id",
-        element: <Post />,
-        errorElement: <PostIdError/>
+        element: (
+          <ProtectedRoute>
+            <Post />
+          </ProtectedRoute>
+        ),
+        errorElement: <PostIdError />,
       },
       {
         path: "/login",

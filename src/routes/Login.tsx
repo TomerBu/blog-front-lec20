@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import InputField from "../components/InputField";
 
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Dialogs } from "../ui/dialogs";
 import { Auth } from "../services/auth-service";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 export type LoginRequest = {
   username: string;
@@ -12,6 +14,11 @@ export type LoginRequest = {
 };
 
 const Login = () => {
+  const { login, isLoggedIn } = useContext(AuthContext);
+
+  if(isLoggedIn){
+     return <Navigate to="/" />
+  }
   const nav = useNavigate();
   const {
     register,
@@ -24,9 +31,10 @@ const Login = () => {
 
   const onSubmit = async (data: LoginRequest) => {
     try {
-      await Auth.login(data);
+      const res = await Auth.login(data);
       await Dialogs.success("Logged in");
-      //SAVE JWT for further requests - stay logged in
+
+      login(res.jwt);
       nav("/");
     } catch (e) {
       Dialogs.error(e);

@@ -16,8 +16,8 @@ export type LoginRequest = {
 const Login = () => {
   const { login, isLoggedIn } = useContext(AuthContext);
 
-  if(isLoggedIn){
-     return <Navigate to="/" />
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
   }
   const nav = useNavigate();
   const {
@@ -49,10 +49,17 @@ const Login = () => {
         noValidate
         className="flex flex-col gap-5 w-1/1 mx-4 md:w-1/2 md:mx-auto shadow-2xl rounded-xl p-5 text-xl"
       >
-        <InputField register={register} errors={errors} name="username" />
         <InputField
+          autoComplete="username"
           register={register}
           errors={errors}
+          name="username"
+        />
+        <InputField
+          autoComplete="current-password"
+          register={register}
+          errors={errors}
+          type="password"
           name="password"
           pattern={{
             value: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*!@$%^&]).{8,32}$/,

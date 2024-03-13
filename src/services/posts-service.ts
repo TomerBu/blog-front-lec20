@@ -44,4 +44,4 @@ const getPosts = async () => {
   return json;
 };
 
-export const PostsService = { getPosts };
+export const PostsService = { getPosts , getPostsAxios};
